@@ -1,6 +1,12 @@
 
-
-
+.contents-wrapper{
+  background-image: url(#);
+  background-size: cover;
+  text-align: center;
+  height:100%;
+  color:rgba(0,64,128,1.0);
+  opacity:0.7;
+}
 
 ul{
   list-style:none;
