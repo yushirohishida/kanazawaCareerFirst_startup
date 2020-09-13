@@ -1,4 +1,14 @@
 
+.container{
+  max-width:1170px;
+  width:100%;
+  padding-right:15px;
+  padding-left:15px;
+  margin:0 auto;
+  font-family:serif;
+  text-align:center;
+}
+
 .contents-wrapper{
   background-image: url(https://github.com/yushirohishida/kanazawaCareerFirst_startup/blob/master/CareerFirst%E3%83%AD%E3%82%B3%E3%82%99_3.png?raw=true);
   background-size: cover;
