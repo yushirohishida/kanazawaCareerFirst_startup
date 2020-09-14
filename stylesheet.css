@@ -26,3 +26,7 @@ textarea{
   width:500px;
   height:80px;
 }
+
+input{
+  padding:15px;
+}
