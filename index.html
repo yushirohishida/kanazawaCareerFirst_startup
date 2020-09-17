@@ -6,6 +6,129 @@
     <title>金大就活サークルCareerFirst 起業部</title>
     <link rel="stylesheet" href="stylesheet.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.validationEngine.js"></script>
+    <script type="text/javascript" src="js/jquery.validationEngine-ja.js"></script>
+    
+    
+    <script type="text/javascript">
+     $(document).ready(function(){
+
+/*
+ * jQuery-Validation-Engineの設定
+ */
+     jQuery("#form").validationEngine( 'attach', {
+        ajaxFormValidation: true
+      , onBeforeAjaxFormValidation: beforeCall //送信ボタンを押した時に実行される関数
+  });
+
+/*
+ * 確認ボタンが押されたら
+ */
+     function beforeCall(){
+
+     alert("beforecall");
+
+     $(".fm").each( function() {
+       var id = $(this).attr("id");
+       var fm = $("#"+id);
+      
+       switch( fm.prop("type") ){
+        case 'text':
+        case 'password':
+        case 'select-one':
+          $(fm).after('<span class="hide del">'+fm.val()+'</span>');
+        break;
+        
+        case 'date':
+          $(fm).after('<span class="hide del">'+fm.val()+'</span>');
+        break;
+        
+        case 'radio':
+          var val = $("#"+id+":checked");
+          if( $(val).prop('checked') ) {
+            $(fm).after('<span class="hide del">'+val.val()+'</span>');
+          }
+        break;
+        
+        case 'checkbox':
+          var val = $("#"+id+":checked");
+          if( $(val).prop('checked') ) {
+            $(fm).after('<span class="hide del">'+val.val()+'</span>');
+          }
+        break;
+        case 'textarea':
+          var val = fm.val();
+          val = val.replace(/\n/g, "<br />"); 
+          $(fm).after('<span class="hide del">'+val+'</span>');
+        break;
+      }
+      
+    });
+
+    change(true);
+  }
+
+/*
+ * リセットボタンが押されたら
+ */
+  $(document).on('click','#reset',function(){
+    reset();
+  });
+/*
+ * 訂正ボタンが押されたら
+ */
+  $(document).on('click','#back',function(){
+    change();
+  });
+/*
+ * 送信ボタンが押されたら
+ */
+  $(document).on('click','#send',function(){
+    var data = $("#form").serialize(); console.log(data);
+    
+      $.ajax({
+          type: "POST",
+          url: "form.php",
+          data: data,
+          success: function(callback){
+            
+          }
+      });
+    
+    $("#form").html('送信しました');
+    reset();
+  });
+  
+/*
+ * フォームを初期化する
+ */
+  var reset = function(type){
+      $('input,textarea').not('input[type=\"radio\"],input[type=\"checkbox\"],:hidden, :button, :submit,:reset').val('');
+      $('input[type=\"radio\"], input[type=\"checkbox\"],select').removeAttr('checked').removeAttr('selected');
+      $("option").attr('selected',false);
+  };
+  
+  $("#back").hide();
+  $("#send").hide();
+/*
+ * 表示・非表示を制御する
+ */
+  var change = function(type){
+    if(type === true){
+      $(".def").hide();
+      $(".hide").show();
+    }else{
+      alert("def hide");
+      $(".def").show();
+      $(".hide").hide();
+      $(".del").remove();
+    }
+  };
+});
+</script>
+    
   </head>
   
  <body>
@@ -83,9 +206,10 @@
           <p>メモ・備考</p>
           <textarea name="bp memo" size="100"></textarea>
         </li>
- <!--       <li>
-          <input type="submit" name="accept" value="企画書作成"
-        </li>                                                    -->
+        <li>
+          <input type="submit" id="submit" value="企画書作成" class="def">
+          <input type="button" id="back" value="戻る"　class="hide">
+        </li>                                                    
       </ul>
     </div>
   </div>
