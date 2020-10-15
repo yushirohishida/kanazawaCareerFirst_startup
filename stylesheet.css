@@ -22,6 +22,14 @@ ul{
   list-style:none;
 }
 
+tr{
+  width:40%;
+}
+
+td{
+  width:60%;
+}
+
 textarea{
   width:500px;
   height:80px;
