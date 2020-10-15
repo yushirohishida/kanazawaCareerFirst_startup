@@ -22,11 +22,13 @@ ul{
   list-style:none;
 }
 
-
+td{
+  width:50%;
+}
 
 textarea{
-  width:60%;
- /* height:80px; */
+  width:500px;
+  height:80px;
 }
 
 input{
